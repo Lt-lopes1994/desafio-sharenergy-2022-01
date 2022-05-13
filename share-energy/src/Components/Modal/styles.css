@@ -1,0 +1,141 @@
+.containerModal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  max-height: 100%;
+  width: 100%;
+
+  background-color: rgba(3, 3, 3, 0.5);
+
+  display: flex;
+  justify-content: center;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  color: #fff;
+
+  cursor: pointer;
+}
+
+.modal {
+  width: 77.4rem;
+  min-height: 95%;
+  background-color: rgb(236, 230, 230);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  top: 2rem;
+  bottom: 2rem;
+  position: fixed;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  padding: 0 6.4rem;
+}
+
+.articlePic {
+  max-width: 55rem;
+  max-height: 35rem;
+  margin-bottom: 1.5rem;
+}
+
+strong {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+a {
+  font-size: 1.3rem;
+  text-decoration: none;
+  color: rgb(6, 10, 202);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.dateContent {
+  font-size: 1.1rem;
+  font-weight: lighter;
+
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+
+  margin-top: 2rem;
+}
+
+@media (max-width: 900px) {
+  .articlePic {
+    max-width: 30rem;
+    max-height: 35rem;
+  }
+
+  .modal {
+    max-width: 55rem;
+    max-height: 30%;
+  }
+
+  strong {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
+  .dateContent {
+    display: flex;
+    flex-direction: column;
+
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 550px) {
+  .articlePic {
+    max-width: 20rem;
+    max-height: 25rem;
+  }
+
+  .modal {
+    max-width: 30rem;
+  }
+
+  .closeIcon {
+    top: 0rem;
+    right: 0rem;
+  }
+
+  .arrowBack {
+    position: absolute;
+
+    left: 0;
+  }
+
+  .arrowForward {
+    position: absolute;
+
+    right: 0;
+  }
+}

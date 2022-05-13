@@ -1,7 +1,6 @@
+import SearchIcon from "@mui/icons-material/Search";
 import Box from "@mui/material/Box";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Paper from "@mui/material/Paper";
-import Switch from "@mui/material/Switch";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -13,10 +12,12 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { visuallyHidden } from "@mui/utils";
+import { format, formatISO } from "date-fns";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import api from "../../Services/api";
-import { format } from "date-fns";
+import ArticleModal from "../Modal";
+import ButtonSearch from "../Button";
 import "./styles.css";
 
 function descendingComparator(a, b, orderBy) {
@@ -139,11 +140,40 @@ export default function EnhancedTable() {
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [dense, setDense] = useState(false);
+  const [dense, setDense] = useState(false); //eslint-disable-line
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [articles, setArticles] = useState([]);
   const [input, setInput] = useState("");
+  const [lowerDate, setLowerDate] = useState("");
+  const [higherDate, setHigherDate] = useState("");
   const [search, setSearch] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentArticle, setCurrentArticle] = useState({});
+  const [idModal, setIdModal] = useState(0);
+
+  function handleArticleClick(pagination) {
+    if (idModal + pagination < 0) {
+      setIdModal(articles.length - 1);
+      return;
+    }
+
+    if (idModal + pagination > articles.length - 1) {
+      setIdModal(0);
+      return;
+    }
+
+    setIdModal(idModal + pagination);
+    setCurrentArticle(articles[idModal]);
+  }
+
+  function handleCurrentArticle(article, index) {
+    setModalOpen(true);
+    setCurrentArticle(article);
+  }
+
+  function handleCloseModal() {
+    setModalOpen(false);
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -160,24 +190,10 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
+  const handleClick = (event, article, index) => {
+    setIdModal(index);
+    setCurrentArticle(article);
+    setModalOpen(true);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -187,10 +203,6 @@ export default function EnhancedTable() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleChangeDense = (event) => {
-    setDense(event.target.checked);
   };
 
   const emptyRows =
@@ -210,17 +222,23 @@ export default function EnhancedTable() {
     fetchData();
   }, []);
 
-  function handleSearch(e) {
-    if (e.key !== "Enter") return;
-
-    setSearch(e.target.value);
+  function handleSearch() {
+    setSearch(input);
 
     setInput("");
+    setLowerDate("");
+    setHigherDate("");
   }
 
   async function handleLoadSearchData() {
+    const url =
+      lowerDate && higherDate
+        ? `/articles?title_contains=${search}&publishedAt_lte=${formatISO(
+            new Date(lowerDate)
+          )}&publishedAt_gte=${formatISO(new Date(higherDate))}`
+        : `/articles?title_contains=${search}`;
     try {
-      const response = await api.get(`/articles?title_contains=${search}`); //eslint-disable-line
+      const response = await api.get(url);
 
       setArticles(response.data);
     } catch (error) {}
@@ -231,22 +249,49 @@ export default function EnhancedTable() {
   }, [search]); //eslint-disable-line
 
   return (
-    <>
+    <div className="teste">
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} />
-          <input
-            type="text"
-            placeholder="Search"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => handleSearch(e)}
-          />
+
+          <div className="containerSearch">
+            <SearchIcon
+              style={{ marginRight: "-0.5rem", marginLeft: "2rem" }}
+              className="searchIcon"
+              color="primary"
+              fontSize="medium"
+            />
+
+            <input
+              type="text"
+              placeholder="Pesquisa por titulo:"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <label className="lowerDate">
+              De:
+              <input
+                type={"date"}
+                value={lowerDate}
+                onChange={(e) => setLowerDate(e.target.value)}
+              />
+            </label>
+
+            <label className="higherDate">
+              Até:
+              <input
+                type={"date"}
+                value={higherDate}
+                onChange={(e) => setHigherDate(e.target.value)}
+              />
+            </label>
+            <ButtonSearch handleSearch={handleSearch} />
+          </div>
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
-              size={dense ? "small" : "medium"}
+              size={dense ? "small" : "small"}
             >
               <EnhancedTableHead
                 numSelected={selected.length}
@@ -256,24 +301,27 @@ export default function EnhancedTable() {
                 onRequestSort={handleRequestSort}
                 rowCount={articles.length}
               />
+
               <TableBody>
                 {stableSort(articles, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((article) => {
+                  .map((article, index) => {
                     return (
                       <TableRow
                         hover
-                        onClick={(event) => handleClick(event, article.name)}
-                        role="checkbox"
+                        onClick={(event) => handleClick(event, article, index)}
                         tabIndex={-1}
                         key={article.id}
+                        item={article}
+                        handleCurrentArticle={handleCurrentArticle}
+                        style={{ cursor: "pointer" }}
                       >
                         <TableCell padding="checkbox"></TableCell>
                         <TableCell component="th" scope="row" padding="none">
                           {article.title}
                         </TableCell>
-                        <TableCell align="right">{article.summary}</TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">{article.summary}</TableCell>
+                        <TableCell align="center">
                           {format(new Date(article.publishedAt), "dd/MM/yy")}
                         </TableCell>
                       </TableRow>
@@ -301,11 +349,13 @@ export default function EnhancedTable() {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </Paper>
-        <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
+        <ArticleModal
+          modalOpen={modalOpen}
+          handleClose={handleCloseModal}
+          article={currentArticle}
+          handleArticleClick={handleArticleClick}
         />
       </Box>
-    </>
+    </div>
   );
 }

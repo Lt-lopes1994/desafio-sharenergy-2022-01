@@ -1,0 +1,11 @@
+.containerModal {
+  position: absolute;
+
+  max-height: 100vh;
+  width: 100vw;
+
+  background-color: rgba(3, 3, 3, 0.5);
+
+  display: flex;
+  justify-content: center;
+}
