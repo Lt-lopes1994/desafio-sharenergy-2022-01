@@ -249,7 +249,7 @@ export default function EnhancedTable() {
   }, [search]); //eslint-disable-line
 
   return (
-    <div className="teste">
+    <div className="containerTable">
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} />

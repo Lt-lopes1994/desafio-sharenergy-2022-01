@@ -22,6 +22,10 @@ label {
   font-size: 1.3rem;
 }
 
+.containerTable {
+  font-size: 1.5rem;
+}
+
 @media (max-width: 900px) {
   .containerSearch {
     flex-direction: column;

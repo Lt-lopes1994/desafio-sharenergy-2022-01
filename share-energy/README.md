@@ -2,14 +2,20 @@
 
 <p align="center">Projeto realizado para demonstração dos conhecimentos em Reactjs e suas libs para a empresa Sharenergy no processo seletivo de Maio de 2022.</p>
 
+<br/>
+
+<strong >
+<a src="https://youtu.be/wOiEWAGgz-w">Link para o video no Youtube.</a>
+</strong>
+
 <p align="center">
- <a href="#objetivo">Objetivo</a> •
- <a href="#roadmap">Roadmap</a> • 
- <a href="#tecnologias">Tecnologias</a> • 
- <a href="#contribuicao">Contribuição</a> • 
- <a href="#licenc-a">Licença</a> • 
- <a href="#autor">Autor</a>
+
+<a href="#tecnologias">Tecnologias</a>  
+<a href="#autor">Autor</a>
+
 </p>
+
+---
 
 <h4 align="center"> 
 	🚧  React 🛠️ Finalizado e esperando melhorias...  🚧
@@ -19,11 +25,15 @@
   <img alt="Blog" title="#blog sharenergy" src="./src/Assets/imgReadme.png" />
 </h1>
 
+---
+
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/).
 Além disso, é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/)
+
+---
 
 ### 🎲 Rodando o Projeto em sua máquina local
 
@@ -56,6 +66,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 ---
 
+<div align="center" >
  <img style="border-radius: 50%;" src="https://media-exp1.licdn.com/dms/image/D5635AQFHz4KeCCDnmA/profile-framedphoto-shrink_100_100/0/1638557517193?e=1653084000&v=beta&t=zzcMBWwyDPKKGidWvQrbe03TNnXq0mKC8Bj19vrmRfs" width="100px;" alt=""/>
  <br />
  <sub><b>Bruno Mantovan Lopes</b></sub></a>
@@ -64,6 +75,12 @@ Feito com muita paciência e dedicação por <b>Bruno Mantovan Lopes</b>
 
 [![Linkedin Badge](https://img.shields.io/badge/-Bruno_Lopes-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/bruno-mantovan-lopes-c501a54tb532/)](https://www.linkedin.com/in/bruno-mantovan-lopes-c501a54tb532/)
 [![Gmail Badge](https://img.shields.io/badge/-brunomantovanlopes@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:brunomantovanlopes@gmail.com)](mailto:brunomantovanlopes@gmail.com)
+
+</div>
+
+---
+
+<div align="center">
 
 <img alt="APM" src="https://img.shields.io/apm/l/react?style=for-the-badge">
 
@@ -86,3 +103,5 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+</div>
